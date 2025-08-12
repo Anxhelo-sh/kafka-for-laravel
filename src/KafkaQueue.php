@@ -45,6 +45,8 @@ class KafkaQueue extends Queue implements QueueContract
 	 */
 	public function push($job, $data = '', $queue = null): true
 	{
+		Log::info("Pushing job to queue {$queue}");
+
 		$payload = $this->handleJobPayload($job, $data);
 
 		return $this->pushRaw($payload, $queue);
@@ -86,6 +88,8 @@ class KafkaQueue extends Queue implements QueueContract
 	 */
 	public function pop($queue = null): void
 	{
+		Log::info("Poping job queue {$queue}");
+
 		$queue = $queue ?? env('KAFKA_QUEUE', 'default');
 
 		$this->consumer->subscribe([$queue]);
