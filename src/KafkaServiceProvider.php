@@ -4,9 +4,15 @@ namespace Kafka;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @package Kafka
+ */
 class KafkaServiceProvider extends ServiceProvider
 {
-    public function boot()
+	/**
+	 * @return void
+	 */
+    public function boot(): void
     {
         $manager = $this->app['queue'];
 
