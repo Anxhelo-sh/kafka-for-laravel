@@ -1,0 +1,12 @@
+{
+    "name": "anxhelo/kafka-for-laravel",
+    "require": {
+        "laravel/framework": "^v12.22.1"
+    },
+    "authors": [
+        {
+            "name": "Anxhelo Sh",
+            "email": "shperdhejaanxhelo@gmail.com"
+        }
+    ]
+}
