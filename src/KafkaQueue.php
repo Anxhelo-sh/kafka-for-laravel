@@ -5,6 +5,7 @@ namespace Kafka;
 
 use Illuminate\Queue\Queue;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
+use Illuminate\Support\Facades\Log;
 
 class KafkaQueue extends Queue implements QueueContract
 {
@@ -23,6 +24,11 @@ class KafkaQueue extends Queue implements QueueContract
 
     public function push($job, $data = '', $queue = null)
     {
+		Log::debug("Pushing job to Kafka Queue", [
+			'queue' => $queue,
+			'job' => $job,
+		]);
+
         $topic = $this->producer->newTopic($queue ?? env('KAFKA_QUEUE'));
         $topic->produce(RD_KAFKA_PARTITION_UA, 0, serialize($job));
         $this->producer->flush(1000);
@@ -38,8 +44,16 @@ class KafkaQueue extends Queue implements QueueContract
 
     }
 
+	/**
+	 * @param $queue
+	 * @return void
+	 */
     public function pop($queue = null)
     {
+		Log::debug("Poping job from Kafka Queue", [
+			'queue' => $queue,
+		]);
+
         $this->consumer->subscribe([$queue]);
 
         try {
@@ -61,7 +75,11 @@ class KafkaQueue extends Queue implements QueueContract
                     break;
             }
         } catch (\Exception $e) {
-            var_dump($e->getMessage());
+			\Log::error($e->getMessage(), [
+				'file' => $e->getFile(),
+				'line' => $e->getLine(),
+				'trace' => $e->getTraceAsString(),
+			]);
         }
     }
 }

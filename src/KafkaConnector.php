@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kafka;
-
 
 use Illuminate\Queue\Connectors\ConnectorInterface;
 
