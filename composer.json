@@ -1,12 +1,22 @@
 {
     "name": "anxhelo/kafka-for-laravel",
+    "description": "Custom Laravel queue driver for Kafka",
+    "type": "library",
     "require": {
-        "laravel/framework": "^v12.22.1"
+        "laravel/framework": "^12.22.1",
+        "ext-rdkafka": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kafka\\": "src/"
+        }
     },
     "authors": [
         {
             "name": "Anxhelo Sh",
             "email": "shperdhejaanxhelo@gmail.com"
         }
-    ]
+    ],
+    "minimum-stability": "stable",
+    "license": "MIT"
 }
